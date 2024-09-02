@@ -5,3 +5,8 @@ output "ecr_repositories" {
   description = "ECR repositories"
   depends_on  = [aws_ecr_repository.this]
 }
+
+output "app_url" {
+  value       = "http://${aws_alb.this.dns_name}/${local.app_path}"
+  description = "The URL to access app"
+}
