@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:latest as builder
+FROM node:slim as builder
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
