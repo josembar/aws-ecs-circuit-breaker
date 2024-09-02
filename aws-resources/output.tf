@@ -10,3 +10,8 @@ output "app_url" {
   value       = "http://${aws_alb.this.dns_name}/${local.app_path}"
   description = "The URL to access app"
 }
+
+output "ecs_cluster_name" {
+  value       = aws_ecs_cluster.this.name
+  description = "The name of ECS cluster"
+}
