@@ -4,6 +4,8 @@ const port = process.env.PORT || 3000
 
 const app = express();
 
+app.set('json spaces', 2)
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
