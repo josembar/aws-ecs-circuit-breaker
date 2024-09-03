@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000
 
 const app = express();
 
+// logger configuration
 const logger = winston.createLogger({
     // Log only if level is less than (meaning more severe) or equal to this
     level: "info",
@@ -21,19 +22,24 @@ const logger = winston.createLogger({
     ],
 });
 
+// app configuration
 app.set('json spaces', 2)
 
+// middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// logging configuration for app
 app.use((req, res, next) => {
     // Log an info message for each incoming request
     logger.info(`Received a ${req.method} request for ${req.url}`);
     next();
 });
 
+// routes
 app.use(require('./routes/appRoutes'));
 
+// server start
 app.listen(port, () => {
   logger.log("info", `Server listening on port ${port}`);
 });
