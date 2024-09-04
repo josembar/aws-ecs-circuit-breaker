@@ -1,5 +1,5 @@
 {
-  "name": "circuit-breaker-demo-node",
+  "name": "nodeapp",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
