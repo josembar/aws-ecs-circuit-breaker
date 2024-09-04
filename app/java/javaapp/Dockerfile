@@ -26,4 +26,4 @@ RUN mkdir /app
 COPY --from=build /home/gradle/javaapp/build/libs/*.jar /app/spring-boot-application.jar
 
 # Entrypoint for the application
-ENTRYPOINT ["java", "-jar","/app/spring-boot-application.jar"]
+ENTRYPOINT ["java", "-jar", "/app/spring-boot-application.jar"]
