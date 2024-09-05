@@ -1,6 +1,6 @@
 locals {
   app_prefix = "circuit-breaker-demo"
-  app_port   = 80
+  app_port   = 3000
   app_path   = "hello"
   image_tag  = "latest"
   ecr_definition = {
