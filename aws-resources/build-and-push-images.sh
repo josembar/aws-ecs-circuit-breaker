@@ -37,23 +37,15 @@ nodejs_image[name]="nodejsapp"
 nodejs_image[directory]="./app/node.js/nodeapp"
 nodejs_image[ecr_repo_name]="circuit-breaker-demo-nodejs"
 
-# Print the value of a specific key
-echo ${nodejs_image[ecr_repo_name]}
-
-# Declare an associative array
 declare -A java_image
-# Add elements to the associative array
 java_image[name]="javaapp"
 java_image[directory]="./app/java/javaapp"
 java_image[ecr_repo_name]="circuit-breaker-demo-java"
 
-# Print the value of a specific key
-echo ${java_image[ecr_repo_name]}
-
-# images=("$NODEJS_APP_IMAGE_NAME" "$JAVA_APP_IMAGE_NAME")
-images=("nodeapp" "javaapp")
+declare -a image_names
+image_names+=( ${nodejs_image[name]} ${java_image[name]})
 echo "Deleting images if they're found..."
-for image in ${images[@]}; do
+for image in ${image_names[@]}; do
     delete_image $image
 done
 
