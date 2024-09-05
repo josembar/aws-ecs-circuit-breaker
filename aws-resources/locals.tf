@@ -4,7 +4,7 @@ locals {
   app_path   = "hello"
   image_tag  = "latest"
   ecr_definition = {
-    "${local.app_prefix}-node" = {
+    "${local.app_prefix}-nodejs" = {
       image_tag_mutability = "MUTABLE"
       force_delete         = true
       scan_on_push         = false
