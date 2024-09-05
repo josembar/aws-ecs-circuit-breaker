@@ -23,31 +23,30 @@ build_and_push_image() {
     docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ecr_repo_name:$image_name-latest
 }
 
-# AWS_REGION=$1
-# echo "AWS_REGION $AWS_REGION"
-
-# AWS_ACCOUNT_ID=$2
-# echo "AWS_ACCOUNT_ID $AWS_ACCOUNT_ID"
-
-# NODEJS_APP_IMAGE_NAME=$3
-# echo "NODEJS_APP_IMAGE_NAME $NODEJS_APP_IMAGE_NAME"
-
-# JAVA_APP_IMAGE_NAME=$4
-# echo "JAVA_APP_IMAGE_NAME $JAVA_APP_IMAGE_NAME"
-
-# NODEJS_ECR_REPO_NAME=$5
-# echo "ECR_REPO_NAME $ECR_REPO_NAME"
-
-# JAVA_ECR_REPO_NAME=$6
-# echo "ECR_REPO_NAME $ECR_REPO_NAME"
+AWS_REGION=$1
+AWS_ACCOUNT_ID=$2
+NODEJS_APP_IMAGE_NAME=$3
+JAVA_APP_IMAGE_NAME=$4
+NODEJS_ECR_REPO_NAME=$5
+JAVA_ECR_REPO_NAME=$6
 
 # images=("$NODEJS_APP_IMAGE_NAME" "$JAVA_APP_IMAGE_NAME")
 images=("nodeapp" "javaapp")
+echo "Deleting images if they're found..."
 for image in ${images[@]}; do
     delete_image $image
 done
 
-# cd ../
+cd ../
+
+echo "AWS_REGION $AWS_REGION"
+echo "AWS_ACCOUNT_ID $AWS_ACCOUNT_ID"
+echo "NODEJS_APP_IMAGE_NAME $NODEJS_APP_IMAGE_NAME"
+echo "JAVA_APP_IMAGE_NAME $JAVA_APP_IMAGE_NAME"
+echo "NODEJS_ECR_REPO_NAME $NODEJS_ECR_REPO_NAME"
+echo "JAVA_ECR_REPO_NAME $JAVA_ECR_REPO_NAME"
+
+ecr_login
 
 # # # docker build -t $IMAGE_NAME ../app
 # docker build -t $DEMO_APP_IMAGE_NAME ../app
