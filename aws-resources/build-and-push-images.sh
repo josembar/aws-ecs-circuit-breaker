@@ -10,6 +10,19 @@ delete_image() {
     fi
 }
 
+ecr_login () {
+    aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+}
+
+build_and_push_image() {
+    image_name=$1
+    directory=$2
+    ecr_repo_name=$3
+    docker build -t $image_name $directory
+    docker tag $image_name:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ecr_repo_name:$image_name-latest
+    docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ecr_repo_name:$image_name-latest
+}
+
 # AWS_REGION=$1
 # echo "AWS_REGION $AWS_REGION"
 
