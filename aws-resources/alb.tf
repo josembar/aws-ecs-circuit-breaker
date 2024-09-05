@@ -19,7 +19,8 @@ resource "aws_alb_target_group" "this" {
   target_type = "ip"
   vpc_id      = data.aws_vpc.this.id
   health_check {
-    path = "/${local.app_path}"
+    path    = "/${local.app_path}"
+    matcher = "200,304"
   }
   lifecycle {
     create_before_destroy = true
