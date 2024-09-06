@@ -14,7 +14,6 @@ resource "aws_ecs_task_definition" "this" {
   cpu                      = 1024
   memory                   = 3072
   execution_role_arn       = aws_iam_role.this.arn
-  task_role_arn            = aws_iam_role.this.arn
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
