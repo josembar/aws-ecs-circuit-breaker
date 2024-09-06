@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const winston = require("winston");
-const port = process.env.PORT || 3000
+const port = parseInt(process.env.PORT) || 3000
 
 const app = express();
 
