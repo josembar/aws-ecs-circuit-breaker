@@ -1,5 +1,8 @@
 locals {
   deploy_java_app = false
+  ecr_url         = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com"
+  nodejs_ecr_url  = "${local.ecr_url}/${local.ecr_definition["${local.app_prefix}-nodejs"].name}"
+  java_ecr_url    = "${local.ecr_url}/${local.ecr_definition["${local.app_prefix}-java"].name}"
 }
 
 resource "aws_ecs_cluster" "this" {
@@ -21,7 +24,7 @@ resource "aws_ecs_task_definition" "this" {
   container_definitions = jsonencode([
     {
       name      = local.app_prefix
-      image     = local.deploy_java_app ? "${aws_ecr_repository.this.repository_url}:${local.java_image_name}-${local.image_tag}" : "${aws_ecr_repository.this.repository_url}:${local.nodejs_image_name}-${local.image_tag}"
+      image     = local.deploy_java_app ? "${local.java_ecr_url}:${local.java_image_name}-${local.image_tag}" : "${local.nodejs_ecr_url}:${local.nodejs_image_name}-${local.image_tag}"
       essential = true
       portMappings = [
         {
