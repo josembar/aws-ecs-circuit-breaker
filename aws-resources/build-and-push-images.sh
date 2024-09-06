@@ -27,13 +27,12 @@ AWS_REGION=$1
 AWS_ACCOUNT_ID=$2
 NODEJS_APP_IMAGE_NAME=$3
 JAVA_APP_IMAGE_NAME=$4
-NODEJS_ECR_REPO_NAME=$5
-JAVA_ECR_REPO_NAME=$6
+ECR_REPO_NAME_PREFIX=$5
 
 declare -a nodejs_image
-nodejs_image+=( "nodejsapp" "./app/node.js/nodeapp" "circuit-breaker-demo-nodejs" )
+nodejs_image+=( "$NODEJS_APP_IMAGE_NAME" "./app/node.js/nodeapp" "$ECR_REPO_NAME_PREFIX-nodejs" )
 declare -a java_image
-java_image+=( "javaapp" "./app/java/javaapp" "circuit-breaker-demo-java" )
+java_image+=( "$JAVA_APP_IMAGE_NAME" "./app/java/javaapp" "$ECR_REPO_NAME_PREFIX-java" )
 declare -A images
 images[0]=${nodejs_image[@]}
 images[1]=${java_image[@]}
