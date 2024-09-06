@@ -1,3 +1,7 @@
+locals {
+  deploy_java_app = false
+}
+
 resource "aws_ecs_cluster" "this" {
   name       = "${local.app_prefix}-cluster"
   depends_on = [aws_ecr_repository.this, terraform_data.build]
