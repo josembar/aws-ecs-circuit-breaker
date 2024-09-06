@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "this" {
       environment = [
         {
           name  = "PORT",
-          value = "${local.app_port}"
+          value = tostring("${local.app_port}")
         }
       ]
       logConfiguration = {
