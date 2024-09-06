@@ -1,8 +1,10 @@
 locals {
-  app_prefix = "circuit-breaker-demo"
-  app_port   = 3000
-  app_path   = "hello"
-  image_tag  = "latest"
+  app_prefix        = "circuit-breaker-demo"
+  nodejs_image_name = "nodejsapp"
+  java_image_name   = "javaapp"
+  app_port          = 3000
+  app_path          = "hello"
+  image_tag         = "latest"
   ecr_definition = {
     "${local.app_prefix}-nodejs" = {
       image_tag_mutability = "MUTABLE"
