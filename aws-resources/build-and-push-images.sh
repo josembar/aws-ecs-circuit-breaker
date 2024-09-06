@@ -30,23 +30,18 @@ JAVA_APP_IMAGE_NAME=$4
 NODEJS_ECR_REPO_NAME=$5
 JAVA_ECR_REPO_NAME=$6
 
-# Declare an associative array
-declare -A nodejs_image
-# Add elements to the associative array
-nodejs_image[name]="nodejsapp"
-nodejs_image[directory]="./app/node.js/nodeapp"
-nodejs_image[ecr_repo_name]="circuit-breaker-demo-nodejs"
+declare -a nodejs_image
+nodejs_image+=( "nodejsapp" "./app/node.js/nodeapp" "circuit-breaker-demo-nodejs" )
+declare -a java_image
+java_image+=( "javaapp" "./app/java/javaapp" "circuit-breaker-demo-java" )
+declare -A images
+images[0]=${nodejs_image[@]}
+images[1]=${java_image[@]}
 
-declare -A java_image
-java_image[name]="javaapp"
-java_image[directory]="./app/java/javaapp"
-java_image[ecr_repo_name]="circuit-breaker-demo-java"
-
-declare -a image_names
-image_names+=( ${nodejs_image[name]} ${java_image[name]})
 echo "Deleting images if they're found..."
-for image in ${image_names[@]}; do
-    delete_image $image
+for i in "${!images[@]}"; do 
+  elements=(${images[$i]})
+  delete_image ${elements[0]}
 done
 
 cd ../
