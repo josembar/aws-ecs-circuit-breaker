@@ -20,8 +20,8 @@ resource "aws_ecs_task_definition" "this" {
   }
   container_definitions = jsonencode([
     {
-      name      = local.demo_app_image_name
-      image     = "${aws_ecr_repository.this.repository_url}:${local.demo_app_image_name}-${local.image_tag}"
+      name      = local.app_prefix
+      image     = local.deploy_java_app ? "${aws_ecr_repository.this.repository_url}:${local.java_image_name}-${local.image_tag}" : "${aws_ecr_repository.this.repository_url}:${local.nodejs_image_name}-${local.image_tag}"
       essential = true
       portMappings = [
         {
@@ -33,55 +33,10 @@ resource "aws_ecs_task_definition" "this" {
       ]
       environment = [
         {
-          name  = "OTEL_EXPORTER_OTLP_METRICS_ENDPOINT",
-          value = "http://localhost:4318/v1/metrics"
-        },
-        {
-          name  = "OTEL_EXPORTER_OTLP_METRICS_PROTOCOL",
-          value = "http/protobuf"
-        },
-        {
-          name  = "OTEL_SERVICE_NAME",
-          value = upper(local.demo_app_image_name)
+          name  = "PORT",
+          value = "${local.app_port}"
         }
-      ],
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          "awslogs-create-group"  = "true"
-          "awslogs-group"         = "/ecs/${local.app_prefix}-task"
-          "awslogs-region"        = "${data.aws_region.current.name}"
-          "awslogs-stream-prefix" = "ecs"
-        }
-      }
-    },
-    {
-      name      = local.otel_image_name
-      image     = "${aws_ecr_repository.this.repository_url}:${local.otel_image_name}-${local.image_tag}"
-      essential = true
-      command = [
-        "--config=/etc/otelcol/otel-config-aws.yaml"
-      ],
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          "awslogs-create-group"  = "true"
-          "awslogs-group"         = "/ecs/${local.app_prefix}-task"
-          "awslogs-region"        = "${data.aws_region.current.name}"
-          "awslogs-stream-prefix" = "ecs"
-        }
-      }
-    },
-    {
-      name      = local.thanos_receiver_image_name
-      image     = "${aws_ecr_repository.this.repository_url}:${local.thanos_receiver_image_name}-${local.image_tag}"
-      essential = true
-      command = [
-        "receive",
-        "--remote-write.address=0.0.0.0:10908",
-        "--label=thanos=\"true\"",
-        "--objstore.config-file=/bucket.yaml"
-      ],
+      ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
