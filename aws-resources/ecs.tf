@@ -1,5 +1,6 @@
 resource "aws_ecs_cluster" "this" {
-  name = "${local.app_prefix}-cluster"
+  name       = "${local.app_prefix}-cluster"
+  depends_on = [aws_ecr_repository.this, terraform_data.build]
 }
 
 # resource "aws_ecs_task_definition" "this" {
