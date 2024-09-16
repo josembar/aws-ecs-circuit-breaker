@@ -7,7 +7,7 @@ output "ecr_repositories" {
 }
 
 output "app_url" {
-  value       = "http://${aws_alb.this.dns_name}/${local.app_path}"
+  value       = "http://${aws_alb.this.dns_name}:${local.app_port}/${local.app_path}"
   description = "The URL to access app"
 }
 
