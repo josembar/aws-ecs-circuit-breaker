@@ -18,7 +18,7 @@ public class Controller {
 
 	@GetMapping(path = "/hello", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getHello() {
-    	return ResponseEntity.status(HttpStatus.OK).body(
+    	return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(
             	Collections.singletonMap("message", "hello"));
 	}
 }
