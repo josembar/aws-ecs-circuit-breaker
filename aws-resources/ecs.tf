@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "this" {
   network_mode             = "awsvpc"
   cpu                      = 1024
   memory                   = 3072
-  skip_destroy             = true
+  skip_destroy             = false
   execution_role_arn       = aws_iam_role.this.arn
   runtime_platform {
     operating_system_family = "LINUX"
